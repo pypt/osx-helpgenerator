@@ -37,6 +37,14 @@
 			<content>
 				<para>No problems.</para>
 				<para>Really.</para>
+				
+				<taskbox title="Here I am.">
+					<ul>
+						<li>Hehe</li>
+						<li>gnaa</li>
+						<li>hihi</li>
+					</ul>
+				</taskbox>
 			</content>
 		</page>
 		<page>

@@ -41,6 +41,32 @@
 		</div>
 	</xsl:template>
 	
+	<xsl:template match="taskbox">
+		<div id="taskbox">
+		<div class="border_top">
+			<div class="border_topleft"></div>
+			<div class="border_topright"></div>
+		</div>
+		<div class="border_left">
+		<div class="border_right">
+			<div class="content">
+				<h2><xsl:value-of select="@title" /></h2>
+				<xsl:apply-templates/>
+			</div>
+		</div>
+		</div>
+		<div class="border_bottom">
+			<div class="border_bottomleft"></div>
+			<div class="border_bottomright"></div>
+		</div>
+		</div>
+	</xsl:template>
+
+	<xsl:template match="img">
+		<img src="{@src}"/>
+		<xsl:text> </xsl:text>
+	</xsl:template>
+	
 	<xsl:template match="b">
 		<b><xsl:apply-templates/></b>
 		<xsl:text> </xsl:text>
