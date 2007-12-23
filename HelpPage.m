@@ -13,7 +13,7 @@
 
 @implementation HelpPage
 
-@synthesize tags, title, content;
+@synthesize tags, title, content, related;
 
 - (void)writeToFile:(NSString *)file ofBook:(HelpBook *)book usingTemplate:(PageTemplate *)template contentXSLT:(NSString *)xslt
 {
@@ -29,13 +29,25 @@
 		transformedOutput = [[[NSString alloc] initWithData:cont encoding:NSUTF8StringEncoding] autorelease];
 	else
 		transformedOutput = [[cont rootElement] XMLString];
-			
+
+	NSMutableString *relatedString = [NSMutableString string];
+	NSArray *relatedLinks = [related children];
+	if ([relatedLinks count]) {
+		[relatedString appendString:@"<div id=\"linkinternalbox\"><h3>Related Topics</h3>"];
+		for (NSXMLNode *item in relatedLinks) {
+			NSString *link = [[(NSXMLElement *)item attributeForName:@"tag"] stringValue];
+			[relatedString appendFormat:@"<p class=\"linkinternal\"><a href=\"help:anchor='%@' bookID=%@\">%@ <span class=\"linkarrow\"></span></a></p>", link, book.appleTitle, [[[book pagesByTag] objectForKey:link] valueForKey:@"title"]];
+		}
+		[relatedString appendString:@"</div>"];		
+	}
+	
 	NSDictionary *keys = [NSDictionary dictionaryWithObjectsAndKeys:
 						  title, @"title",
 						  tagString, @"tags",
 						  transformedOutput, @"content",
 						  book.appleTitle, @"APPLETITLE",
 						  [book valueForKey:@"icon"], @"icon",
+						  relatedString, @"related",
 						  nil];
 	
 	NSString *output = [template stringByInsertingValues:keys];

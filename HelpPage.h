@@ -18,12 +18,14 @@
 	NSString *title;
 	
 	NSXMLNode *content;
+	NSXMLNode *related;
 	
 }
 
 @property (assign) NSMutableArray *tags;
 @property (assign) NSString *title;
 @property (assign) NSXMLNode *content;
+@property (assign) NSXMLNode *related;
 
 - (void)writeToFile:(NSString *)file ofBook:(HelpBook *)book usingTemplate:(PageTemplate *)template contentXSLT:(NSString *)xslt;
 

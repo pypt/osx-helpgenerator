@@ -23,6 +23,23 @@
 		</div>
 		<xsl:text> </xsl:text>
 	</xsl:template>
+
+	<xsl:template match="ul">
+		<div id="introauxlist">
+			<xsl:apply-templates/>
+		</div>
+	</xsl:template>
+
+	<xsl:template match="li">
+		<div class="introauxoption">
+		<div class="introauxbullet">■</div>
+		<div class="introauxcontent">
+		<p class="introauxoptionlongtext">
+			<xsl:apply-templates/>
+		</p>
+		</div>
+		</div>
+	</xsl:template>
 	
 	<xsl:template match="b">
 		<b><xsl:apply-templates/></b>

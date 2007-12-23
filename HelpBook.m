@@ -62,12 +62,14 @@
 		NSString *title = [[[node nodesForXPath:@"title" error:nil] lastObject] stringValue];
 		
 		NSXMLNode *content = [[node nodesForXPath:@"content" error:nil] lastObject];
+		NSXMLNode *related = [[node nodesForXPath:@"related" error:nil] lastObject];
 		
 		HelpPage *page = [[HelpPage alloc] init];
 		
 		page.tags = tags;
 		page.title = title;
 		page.content = content;
+		page.related = related;
 		
 		for (NSString *tag in tags) 
 			[result setObject:page forKey:tag];
