@@ -22,7 +22,7 @@
 			<tag>discover</tag>
 			<title>Discover Aurora</title>
 			<content>
-				Aurora is a great application!
+				<b>Aurora</b> is a <help:a href="problems">great</help:a> application! <img src="../gfx/AppIcon32.png" />
 			</content>
 		</page>
 		

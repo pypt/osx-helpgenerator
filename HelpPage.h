@@ -27,4 +27,6 @@
 
 - (void)writeToFile:(NSString *)file ofBook:(HelpBook *)book usingTemplate:(PageTemplate *)template;
 
+- (void)writeContentNode:(NSXMLNode *)node toBuffer:(NSMutableString *)buffer forBook:(HelpBook *)book;
+
 @end

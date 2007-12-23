@@ -6,10 +6,10 @@ int main (int argc, const char * argv[])
 {
     NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
 	
-	HelpBook *book = [HelpBook bookWithInputBase:@"/Users/jonaswitt/Desktop/Input"];
+	NSString *base = @"/Users/jonaswitt/Desktop/AuroraInput";
 	
-	NSLog(@"%@", [book pagesByTag]);
-		
+	HelpBook *book = [HelpBook bookWithInputBase:base];
+			
 	[book outputToDirectory:@"/Users/jonaswitt/Development/Aurora/App/Resources/en.lproj/"];
     
     [pool drain];
