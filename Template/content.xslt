@@ -8,16 +8,6 @@
 		</div>
 	</xsl:template>
 	
-	<xsl:template match="b">
-		<b><xsl:apply-templates/></b>
-		<xsl:text> </xsl:text>
-	</xsl:template>
-	
-	<xsl:template match="b">
-		<b><xsl:apply-templates/></b>
-		<xsl:text> </xsl:text>
-	</xsl:template>
-	
 	<xsl:template match="link">
 		<a href="help:anchor='{@href}' bookID=$$APPLETITLE$$">
 			<xsl:apply-templates/>
@@ -33,4 +23,15 @@
 		</div>
 		<xsl:text> </xsl:text>
 	</xsl:template>
+	
+	<xsl:template match="b">
+		<b><xsl:apply-templates/></b>
+		<xsl:text> </xsl:text>
+	</xsl:template>
+	
+	<xsl:template match="i">
+		<i><xsl:apply-templates/></i>
+		<xsl:text> </xsl:text>
+	</xsl:template>
+	
 </xsl:transform>
