@@ -152,20 +152,19 @@
 	NSInteger count = 0;
 	NSDictionary *pages = [self pagesByTag];
 	PageTemplate *simpleTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"page.html"]]] autorelease];
+	PageTemplate *xsltTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"content.xslt"]]] autorelease];
+	NSString *xslt = [xsltTemplate stringByInsertingValues:[NSDictionary dictionaryWithObjectsAndKeys:appleTitle, @"appleTitle", nil]];	
 	for (NSString *tag in pages) {
 		HelpPage *page = [pages objectForKey:tag];
 		if ([pagesWritten containsObject:page])
 			continue;
 		
-		[page writeToFile:[[dir stringByAppendingPathComponent:@"pgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.html", count++]] ofBook:self usingTemplate:simpleTemplate];
+		[page writeToFile:[[dir stringByAppendingPathComponent:@"pgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.html", count++]] ofBook:self usingTemplate:simpleTemplate contentXSLT:xslt];
 		[pagesWritten addObject:page];
 	}
 	
-	
 	PageTemplate *xTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"x.html"]]] autorelease];
-	
 	for (NSString *letter in letters) {
-
 		NSMutableString *content = [NSMutableString string];
 		NSDictionary *index = [self indexItems];
 		for (NSString *x in index) {
@@ -183,11 +182,9 @@
 		NSString *xall = [xTemplate stringByInsertingValues:keys];
 		
 		[xall writeToFile:[[dir stringByAppendingPathComponent:@"xpgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"x%@.html", letter]] atomically:NO encoding:NSUTF8StringEncoding error:nil];
-
 	}
 	
 	system([[NSString stringWithFormat:@"\"/Developer/Applications/Utilities/Help Indexer.app/Contents/MacOS/Help Indexer\" \"%@\"", dir] UTF8String]);
-	
 }
 
 @end

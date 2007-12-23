@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<help xmlns:help="http://code.google.com/p/helpgenerator/">
+<help>
 	<head>
 		<name>Aurora</name>
 		<icon href="AppIcon32.png"/>
@@ -19,21 +19,25 @@
 		<page>
 			<tag>discover</tag>
 			<title>Discover Aurora</title>
-			<content><b>Aurora</b> is a <help:a href="problems">great</help:a> application! <img src="../gfx/AppIcon32.png"/></content>
+			<content>
+				<para><b>Aurora</b> is a <link href="problems">great</link> application! <img src="../gfx/AppIcon32.png"/></para>
+				
+			</content>
 		</page>
 		<page>
 			<tag>problems</tag>
 			<tag>x_wake</tag>
 			<title>Solving Problems</title>
 			<content>
-				No problems.
+				<para>No problems.</para>
+				<para>Really.</para>
 			</content>
 		</page>
 		<page>
 			<tag>playlists</tag>
 			<title>How Aurora handles Playlists</title>
 			<content>
-				No way.
+				<para>No way.</para>
 			</content>
 		</page>
 	</pages>

@@ -25,8 +25,6 @@
 @property (assign) NSString *title;
 @property (assign) NSXMLNode *content;
 
-- (void)writeToFile:(NSString *)file ofBook:(HelpBook *)book usingTemplate:(PageTemplate *)template;
-
-- (void)writeContentNode:(NSXMLNode *)node toBuffer:(NSMutableString *)buffer forBook:(HelpBook *)book;
+- (void)writeToFile:(NSString *)file ofBook:(HelpBook *)book usingTemplate:(PageTemplate *)template contentXSLT:(NSString *)xslt;
 
 @end
