@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<help>
+	<head>
+		<name>Aurora</name>
+		<icon href="AppIcon32.png" />
+		<website href="http://metaquark.de/" />
+		<AppleTitle>Aurora Help</AppleTitle>
+	</head>
+	
+	<access>
+		<main>
+			<item href="discover">Learn how to use Aurora to wake up listening to your favorite music.</item>
+			<item href="problems">Trouble? Check here for answers.</item>
+		</main>
+		<featured>
+			<item href="playlists" />
+		</featured>
+	</access>
+	
+	<pages>
+		<page>
+			<tag>discover</tag>
+			<title>Discover Aurora</title>
+			<content>
+				Aurora is a great application!
+			</content>
+		</page>
+		
+		<page>
+			<tag>problems</tag>
+			<tag>x_wake</tag>
+			<title>Solving Problems</title>
+			<content>
+				No problems.
+			</content>
+		</page>
+		
+		<page>
+			<tag>playlists</tag>
+			<title>How Aurora handles Playlists</title>
+			<content>
+				No way.
+			</content>
+		</page>
+	</pages>
+	
+	<index>
+		<item tag="x_wake">waking up</index>
+	</index>
+</help>
