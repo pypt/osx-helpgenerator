@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>AppIcon</key>
+	<string>AppIcon32.png</string>
+	<key>AppName</key>
+	<string>Aurora</string>
+	<key>AppleTitle</key>
+	<string>Aurora Help</string>
+	<key>Website</key>
+	<string>http://metaquark.de/</string>
+</dict>
+</plist>

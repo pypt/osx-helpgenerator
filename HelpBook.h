@@ -15,28 +15,27 @@
 	NSString *templateBase;
 	NSString *skeletonBase;
 	
-	NSXMLDocument *document;
-
 	NSString *name;
 	NSString *appleTitle;
 	NSURL *url;
 	NSString *icon;
 	
-	NSDictionary *pagesByTag;
+	NSMutableDictionary *index;	
+	NSMutableDictionary *pagesByTag;
 	
-	NSArray *letters;
-		
+	NSMutableDictionary *accessLinks;
+	NSMutableArray *accessFeatures;
+			
 }
 
 @property (assign) NSString *appleTitle;
+@property (readonly) NSDictionary *pagesByTag;
 
 + (HelpBook *)bookWithInputBase:(NSString *)input;
 
-- (NSDictionary *)pagesByTag;
+- (id)initWithBasePath:(NSString *)path;
 
-- (NSString *)indexPageContent;
-
-- (NSString *)replaceInString:(NSString *)string keys:(NSDictionary *)dict;
+- (NSString *)accessPageContent;
 
 - (void)outputToDirectory:(NSString *)dir;
 

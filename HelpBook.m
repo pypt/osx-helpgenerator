@@ -11,112 +11,116 @@
 #import "HelpPage.h"
 #import "PageTemplate.h"
 
+
+#define INDEX_LETTERS [NSArray arrayWithObjects:@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", @"all", nil]
+
 @implementation HelpBook
 
-@synthesize appleTitle;
+@synthesize appleTitle, pagesByTag;
 
 + (HelpBook *)bookWithInputBase:(NSString *)input
 {
-	HelpBook *book = [[[self alloc] init] autorelease];
-	
-	NSXMLDocument *doc = [[NSXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[input stringByAppendingPathComponent:@"help.xml"]] options:NSXMLDocumentTidyXML error:nil];
-	
-	[book setValue:input forKey:@"inputBase"];
-	[book setValue:doc forKey:@"document"];
-	
-	NSString *name = [[[doc nodesForXPath:@"/help/head/name" error:nil] lastObject] stringValue];
-	[book setValue:name forKey:@"name"];
-	
-	NSString *appleTitle = [[[doc nodesForXPath:@"/help/head/AppleTitle" error:nil] lastObject] stringValue];
-	[book setValue:appleTitle forKey:@"appleTitle"];
-	
-	NSString *link = [[[[doc nodesForXPath:@"/help/head/website" error:nil] lastObject] attributeForName:@"href"] stringValue];
-	[book setValue:[NSURL URLWithString:link] forKey:@"url"];
+	return [[[self alloc] initWithBasePath:input] autorelease];
+}
 
-	NSString *icon = [[[[doc nodesForXPath:@"/help/head/icon" error:nil] lastObject] attributeForName:@"href"] stringValue];
-	[book setValue:icon forKey:@"icon"];
+- (id)initWithBasePath:(NSString *)path
+{
+	if (![super init])
+		return nil;
+	
+	inputBase = path;
 	
 	NSString *base = @"/Users/jonaswitt/Development/HelpGenerator";
+	templateBase = [base stringByAppendingPathComponent:@"Template"];
+	skeletonBase = [base stringByAppendingPathComponent:@"Skeleton"];
 	
-	[book setValue:[base stringByAppendingPathComponent:@"Template"] forKey:@"templateBase"];
-	[book setValue:[base stringByAppendingPathComponent:@"Skeleton"] forKey:@"skeletonBase"];
+	NSDictionary *infoDictionary = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"Info.plist"]];
+	name = [infoDictionary objectForKey:@"AppName"];
+	appleTitle = [infoDictionary objectForKey:@"AppleTitle"];
+	if ([infoDictionary objectForKey:@"Website"])
+		url = [NSURL URLWithString:[infoDictionary objectForKey:@"Website"]];
+	icon = [infoDictionary objectForKey:@"AppIcon"];
 	
-	[book setValue:[NSArray arrayWithObjects:@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", @"all", nil] forKey:@"letters"];
+	pagesByTag = [[NSMutableDictionary alloc] init];
 	
-	return book;
-}
+	for (NSString *item in [[NSFileManager defaultManager] directoryContentsAtPath:path]) {
+		if (![[item lowercaseString] hasSuffix:@".xml"])
+			continue;
 
-- (NSDictionary *)pagesByTag
-{
-	if (pagesByTag)
-		return pagesByTag;
-	
-	NSMutableDictionary *result = [NSMutableDictionary dictionary];
-	
-	for (NSXMLNode *node in [document nodesForXPath:@"/help/pages/page" error:nil]) {
-
-		NSMutableArray *tags = [NSMutableArray array];
-		for (NSXMLNode *tagNode in [node nodesForXPath:@"tag" error:nil])
-			[tags addObject:[tagNode stringValue]];
+		NSXMLDocument *document = [[NSXMLDocument alloc] initWithContentsOfURL:[NSURL fileURLWithPath:[path stringByAppendingPathComponent:item]] options:NSXMLDocumentTidyXML error:nil];
+		if (!document) {
+			NSLog(@"Warning: invalid XML document at %@", item);
+			continue;
+		}
 		
-		NSString *title = [[[node nodesForXPath:@"title" error:nil] lastObject] stringValue];
+		if ([[[document rootElement] name] isEqualToString:@"index"]) {
+			index = [[NSMutableDictionary alloc] init];
+			for (NSXMLNode *node in [document nodesForXPath:@"/index/item" error:nil]) {
+				NSString *xname = [node stringValue];
+				NSString *tag = [[(NSXMLElement *)node attributeForName:@"tag"] stringValue];
+				[index setObject:tag forKey:xname];
+			}
+		}
+		else if ([[[document rootElement] name] isEqualToString:@"access"]) {
+			accessLinks = [[NSMutableDictionary alloc] init];
+			for (id node in [document nodesForXPath:@"/access/main/item" error:nil]) {
+				NSString *href = [[node attributeForName:@"href"] stringValue];
+				NSString *desc = [node stringValue];
+				[accessLinks setObject:desc forKey:href];
+			}
+			
+			accessFeatures = [[NSMutableArray alloc] init];
+			for (id node in [document nodesForXPath:@"/access/featured/item" error:nil]) {
+				NSString *href = [[node attributeForName:@"href"] stringValue];
+				[accessFeatures addObject:href];
+			}
+		}
+		else {
+			HelpPage *page = [[HelpPage alloc] initWithXMLDocument:document inHelpBook:self];
+			for (NSString *tag in page.tags)
+				[pagesByTag setObject:page forKey:tag];
+			[page release];
+		}
 		
-		NSXMLNode *content = [[node nodesForXPath:@"content" error:nil] lastObject];
-		NSXMLNode *related = [[node nodesForXPath:@"related" error:nil] lastObject];
-		
-		HelpPage *page = [[HelpPage alloc] init];
-		
-		page.tags = tags;
-		page.title = title;
-		page.content = content;
-		page.related = related;
-		
-		for (NSString *tag in tags) 
-			[result setObject:page forKey:tag];
-		
+		[document release];
 	}
 	
-	return pagesByTag = result;
+	return self;
 }
 
-- (NSString *)indexPageContent
+- (NSString *)accessPageContent
 {
 	NSMutableString *left = [NSMutableString string];
-	for (NSXMLNode *node in [document nodesForXPath:@"/help/access/main/item" error:nil]) {
-		NSString *href = [[(NSXMLElement *)node attributeForName:@"href"] stringValue];
-		NSString *desc = [node stringValue];
-		NSString *title = [[[self pagesByTag] objectForKey:href] valueForKey:@"title"];
+	for (NSString *href in accessLinks) {
+		NSString *desc = [accessLinks objectForKey:href];
+		NSString *title = [[pagesByTag objectForKey:href] valueForKey:@"title"];
 		[left appendFormat:@"<p class=\"topleft_p\"><a href=\"help:anchor='%@' bookID=%@\">%@</a><br/>%@</p>\n\n", href, appleTitle, title, desc];
 	}
 	
 	NSMutableString *featured = [NSMutableString string];
-	for (NSXMLNode *node in [document nodesForXPath:@"/help/access/featured/item" error:nil]) {
-		NSString *href = [[(NSXMLElement *)node attributeForName:@"href"] stringValue];
-		NSString *title = [[[self pagesByTag] objectForKey:href] valueForKey:@"title"];
+	for (NSString *href in accessFeatures) {
+		NSString *title = [[pagesByTag objectForKey:href] valueForKey:@"title"];
 		[featured appendFormat:@"<p><a href=\"help:anchor='%@' bookID=%@\">%@</a></p>\n\n", href, appleTitle, title];
 	}
 	
-	PageTemplate *indexTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"index.html"]]] autorelease];
-	NSDictionary *keys = [NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@ Help", name], @"title", left, @"left", featured, @"featured", appleTitle, @"appleTitle", [url absoluteString], @"link", [url host], @"linkdesc", icon, @"icon", nil];
+	PageTemplate *indexTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"access.html"]]] autorelease];
+	NSDictionary *keys = [NSDictionary dictionaryWithObjectsAndKeys:
+						  [NSString stringWithFormat:@"%@ Help", name], @"title", 
+						  left, @"left", 
+						  featured, @"featured", 
+						  appleTitle, @"appleTitle", 
+						  [url absoluteString], @"link", 
+						  [url host], @"linkdesc", 
+						  icon, @"icon", 
+						  nil];
 	
 	return [indexTemplate stringByInsertingValues:keys];
-}
-
-- (NSDictionary *)indexItems
-{
-	NSMutableDictionary *result = [NSMutableDictionary dictionary];
-	for (NSXMLNode *node in [document nodesForXPath:@"/help/index/item" error:nil]) {
-		NSString *xname = [node stringValue];
-		NSString *tag = [[(NSXMLElement *)node attributeForName:@"tag"] stringValue];
-		[result setObject:tag forKey:xname];
-	}
-	return result;
 }
 
 - (NSString *)indexHeadForPage:(NSString *)page
 {
 	NSMutableString *result = [NSMutableString string];
-	for (NSString *letter in letters) {
+	for (NSString *letter in INDEX_LETTERS) {
 		BOOL active = [page isEqualToString:letter];
 		if (active)
 			[result appendFormat:@"<td width=\"19\"><div class=\"alphacircle\">%@</div></td>\n", [letter capitalizedString]];
@@ -124,14 +128,6 @@
 			[result appendFormat:@"<td width=\"19\"><a href=\"help:anchor='x%@' bookID=%@\">%@</a></td>\n", letter, appleTitle, [letter capitalizedString]];
 	}
 	return result;
-}
-
-- (NSString *)replaceInString:(NSString *)string keys:(NSDictionary *)dict
-{
-	for (NSString *key in dict) {
-		string = [string stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"$$%@$$", [key uppercaseString]] withString:[dict objectForKey:key]];
-	}
-	return string;
 }
 
 - (void)outputToDirectory:(NSString *)dir
@@ -142,13 +138,12 @@
 	[fm removeItemAtPath:dir error:nil];	
 	[fm copyPath:skeletonBase toPath:dir handler:nil];
 	
-	// cpy gfx
 	for (NSString *path in [fm directoryContentsAtPath:[inputBase stringByAppendingPathComponent:@"gfx"]]){
 		NSString *from = [[inputBase stringByAppendingPathComponent:@"gfx"] stringByAppendingPathComponent:path];
 		[fm copyPath:from toPath:[[dir stringByAppendingPathComponent:@"gfx"] stringByAppendingPathComponent:path] handler:nil];
 	}
 	
-	[[self indexPageContent] writeToFile:[dir stringByAppendingPathComponent:@"index.html"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+	[[self accessPageContent] writeToFile:[dir stringByAppendingPathComponent:@"index.html"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 		
 	NSMutableSet *pagesWritten = [NSMutableSet set];
 	NSInteger count = 0;
@@ -161,14 +156,13 @@
 		if ([pagesWritten containsObject:page])
 			continue;
 		
-		[page writeToFile:[[dir stringByAppendingPathComponent:@"pgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.html", count++]] ofBook:self usingTemplate:simpleTemplate contentXSLT:xslt];
+		[page writeToFile:[[dir stringByAppendingPathComponent:@"pgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.html", count++]] usingTemplate:simpleTemplate contentXSLT:xslt];
 		[pagesWritten addObject:page];
 	}
 	
-	PageTemplate *xTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"x.html"]]] autorelease];
-	for (NSString *letter in letters) {
+	PageTemplate *xTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"index.html"]]] autorelease];
+	for (NSString *letter in INDEX_LETTERS) {
 		NSMutableString *content = [NSMutableString string];
-		NSDictionary *index = [self indexItems];
 		for (NSString *x in index) {
 			if (![[x lowercaseString] hasPrefix:letter] && ![letter isEqualToString:@"all"])
 				continue;

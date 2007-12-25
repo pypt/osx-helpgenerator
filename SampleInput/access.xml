@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<access>
+	<main>
+		<item href="discover">Learn how to use Aurora to wake up listening to your favorite music.</item>
+		<item href="problems">Trouble? Check here for answers.</item>
+	</main>
+	<featured>
+		<item href="playlists"/>
+	</featured>
+</access>

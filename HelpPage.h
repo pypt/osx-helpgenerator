@@ -20,6 +20,8 @@
 	NSXMLNode *content;
 	NSXMLNode *related;
 	
+	HelpBook *helpBook;
+	
 }
 
 @property (assign) NSMutableArray *tags;
@@ -27,6 +29,8 @@
 @property (assign) NSXMLNode *content;
 @property (assign) NSXMLNode *related;
 
-- (void)writeToFile:(NSString *)file ofBook:(HelpBook *)book usingTemplate:(PageTemplate *)template contentXSLT:(NSString *)xslt;
+- (id)initWithXMLDocument:(NSXMLDocument *)document inHelpBook:(HelpBook *)book;
+
+- (void)writeToFile:(NSString *)file usingTemplate:(PageTemplate *)template contentXSLT:(NSString *)xslt;
 
 @end

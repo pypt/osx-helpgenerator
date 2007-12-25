@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page>
+	<tag>discover</tag>
+	<title>Discover Aurora</title>
+	<content>
+		<para><b>Aurora</b> is a <link href="problems">great</link> application! <img src="../gfx/AppIcon32.png"/></para>
+		<ul>
+			<li>foo</li>
+			<li>bar</li>
+		</ul>
+	</content>
+	<related>
+		<item tag="problems" />
+	</related>
+</page>

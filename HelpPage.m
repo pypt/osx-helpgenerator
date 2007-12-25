@@ -15,7 +15,26 @@
 
 @synthesize tags, title, content, related;
 
-- (void)writeToFile:(NSString *)file ofBook:(HelpBook *)book usingTemplate:(PageTemplate *)template contentXSLT:(NSString *)xslt
+- (id)initWithXMLDocument:(NSXMLDocument *)document inHelpBook:(HelpBook *)book
+{
+	if (![super init])
+		return nil;
+	
+	helpBook = book;
+		
+	tags = [[NSMutableArray alloc] init];
+	for (NSXMLNode *tagNode in [document nodesForXPath:@"/page/tag" error:nil])
+		[tags addObject:[tagNode stringValue]];
+	
+	title = [[[[document nodesForXPath:@"/page/title" error:nil] lastObject] stringValue] copy];
+	
+	content = [[[document nodesForXPath:@"/page/content" error:nil] lastObject] retain];
+	related = [[[document nodesForXPath:@"/page/related" error:nil] lastObject] retain];
+	
+	return self;
+}
+
+- (void)writeToFile:(NSString *)file usingTemplate:(PageTemplate *)template contentXSLT:(NSString *)xslt
 {
 	NSMutableString *tagString = [NSMutableString string];
 	for (NSString *tag in tags)
@@ -36,7 +55,7 @@
 		[relatedString appendString:@"<div id=\"linkinternalbox\"><h3>Related Topics</h3>"];
 		for (NSXMLNode *item in relatedLinks) {
 			NSString *link = [[(NSXMLElement *)item attributeForName:@"tag"] stringValue];
-			[relatedString appendFormat:@"<p class=\"linkinternal\"><a href=\"help:anchor='%@' bookID=%@\">%@ <span class=\"linkarrow\"></span></a></p>", link, book.appleTitle, [[[book pagesByTag] objectForKey:link] valueForKey:@"title"]];
+			[relatedString appendFormat:@"<p class=\"linkinternal\"><a href=\"help:anchor='%@' bookID=%@\">%@ <span class=\"linkarrow\"></span></a></p>", link, helpBook.appleTitle, [[helpBook.pagesByTag objectForKey:link] valueForKey:@"title"]];
 		}
 		[relatedString appendString:@"</div>"];		
 	}
@@ -45,8 +64,8 @@
 						  title, @"title",
 						  tagString, @"tags",
 						  transformedOutput, @"content",
-						  book.appleTitle, @"APPLETITLE",
-						  [book valueForKey:@"icon"], @"icon",
+						  helpBook.appleTitle, @"APPLETITLE",
+						  [helpBook valueForKey:@"icon"], @"icon",
 						  relatedString, @"related",
 						  nil];
 	
