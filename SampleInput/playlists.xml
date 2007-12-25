@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<tag>playlists</tag>
-	<title>How Aurora handles Playlists</title>
+	<tag>test</tag>
+	
+	<title>How Sample App handles Playlists</title>
 	<content>
-		<para>No way.</para>
+		<para>It does that in a very intelligent way.</para>
 	</content>
 </page>

@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<tag>problems</tag>
-	<tag>x_wake</tag>
+	<tag>test</tag>
+	
 	<title>Solving Problems</title>
 	<content>
-		<para>No problems.</para>
-		<para>Really.</para>
+		<para>There are no problems with Sample App.</para>
+		<para>Really. Well, almost.</para>
 		
-		<taskbox title="Here I am.">
+		<taskbox title="Kinds of problems">
 			<ul>
-				<li>Hehe</li>
-				<li>gnaa</li>
-				<li>hihi</li>
+				<li>Sample App doesn't open</li>
+				<li>Sample App quits after launch</li>
+				<li>Sample App doesn't work on Windows Vista</li>
 			</ul>
 		</taskbox>
 	</content>

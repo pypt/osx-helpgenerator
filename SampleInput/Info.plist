@@ -5,10 +5,10 @@
 	<key>AppIcon</key>
 	<string>AppIcon32.png</string>
 	<key>AppName</key>
-	<string>Aurora</string>
+	<string>Sample App</string>
 	<key>AppleTitle</key>
-	<string>Aurora Help</string>
+	<string>Sample App Help</string>
 	<key>Website</key>
-	<string>http://metaquark.de/</string>
+	<string>http://sampleapp.com/</string>
 </dict>
 </plist>

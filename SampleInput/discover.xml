@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
 	<tag>discover</tag>
-	<title>Discover Aurora</title>
+	<title>Discover Sample App</title>
 	<content>
-		<para><b>Aurora</b> is a <link href="problems">great</link> application! <img src="../gfx/AppIcon32.png"/></para>
+		<para><b>Sample App</b> is a <link href="problems">great</link> application!</para>
 		<ul>
 			<li>foo</li>
 			<li>bar</li>
