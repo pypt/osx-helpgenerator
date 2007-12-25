@@ -31,9 +31,9 @@
 @property (assign) NSString *appleTitle;
 @property (readonly) NSDictionary *pagesByTag;
 
-+ (HelpBook *)bookWithInputBase:(NSString *)input;
++ (HelpBook *)bookWithInputBase:(NSString *)input templateBase:(NSString *)template;
 
-- (id)initWithBasePath:(NSString *)path;
+- (id)initWithBasePath:(NSString *)path templateBase:(NSString *)template;
 
 - (NSString *)accessPageContent;
 

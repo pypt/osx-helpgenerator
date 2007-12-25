@@ -18,21 +18,20 @@
 
 @synthesize appleTitle, pagesByTag;
 
-+ (HelpBook *)bookWithInputBase:(NSString *)input
++ (HelpBook *)bookWithInputBase:(NSString *)input templateBase:(NSString *)template
 {
-	return [[[self alloc] initWithBasePath:input] autorelease];
+	return [[[self alloc] initWithBasePath:input templateBase:template] autorelease];
 }
 
-- (id)initWithBasePath:(NSString *)path
+- (id)initWithBasePath:(NSString *)path templateBase:(NSString *)template
 {
 	if (![super init])
 		return nil;
 	
 	inputBase = path;
 	
-	NSString *base = @"/Users/jonaswitt/Development/HelpGenerator";
-	templateBase = [base stringByAppendingPathComponent:@"Template"];
-	skeletonBase = [base stringByAppendingPathComponent:@"Skeleton"];
+	templateBase = template;
+	skeletonBase = [templateBase stringByAppendingPathComponent:@"Skeleton"];
 	
 	NSDictionary *infoDictionary = [NSDictionary dictionaryWithContentsOfFile:[path stringByAppendingPathComponent:@"Info.plist"]];
 	name = [infoDictionary objectForKey:@"AppName"];

@@ -7,47 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		78CD338C0D1D6B5800257654 /* HelpBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CD338B0D1D6B5800257654 /* HelpBook.m */; };
-		78CD33AA0D1D6DCB00257654 /* HelpPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CD33A90D1D6DCB00257654 /* HelpPage.m */; };
-		78CD345A0D1D792900257654 /* PageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CD34590D1D792900257654 /* PageTemplate.m */; };
-		8DD76F9A0486AA7600D96B5E /* HelpGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* HelpGenerator.m */; settings = {ATTRIBUTES = (); }; };
-		8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 08FB779EFE84155DC02AAC07 /* Foundation.framework */; };
-		8DD76F9F0486AA7600D96B5E /* HelpGenerator.1 in CopyFiles */ = {isa = PBXBuildFile; fileRef = C6859EA3029092ED04C91782 /* HelpGenerator.1 */; };
+		78556FE20D2178D800F84A00 /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78556EAF0D2178CF00F84A00 /* AppKit.framework */; };
+		78556FE60D21796400F84A00 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 78556FE50D21795F00F84A00 /* MainMenu.xib */; };
+		78556FE80D21797200F84A00 /* HelpGenerator.m in Sources */ = {isa = PBXBuildFile; fileRef = 08FB7796FE84155DC02AAC07 /* HelpGenerator.m */; };
+		78556FEA0D21797200F84A00 /* HelpBook.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CD338B0D1D6B5800257654 /* HelpBook.m */; };
+		78556FEC0D21797200F84A00 /* HelpPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CD33A90D1D6DCB00257654 /* HelpPage.m */; };
+		78556FEE0D21797200F84A00 /* PageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CD34590D1D792900257654 /* PageTemplate.m */; };
+		7855700B0D217AD400F84A00 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855700A0D217AD400F84A00 /* Controller.m */; };
+		785570710D217D1600F84A00 /* Template in Resources */ = {isa = PBXBuildFile; fileRef = 7855702A0D217D1600F84A00 /* Template */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		8DD76F9E0486AA7600D96B5E /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 8;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
-			files = (
-				8DD76F9F0486AA7600D96B5E /* HelpGenerator.1 in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 1;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* HelpGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpGenerator.m; sourceTree = "<group>"; };
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* HelpGenerator_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpGenerator_Prefix.pch; sourceTree = "<group>"; };
+		78556EA50D21789C00F84A00 /* Help Generator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Help Generator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		78556EA70D21789C00F84A00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		78556EAF0D2178CF00F84A00 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		78556FE50D21795F00F84A00 /* MainMenu.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
+		785570090D217AD400F84A00 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
+		7855700A0D217AD400F84A00 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
+		7855702A0D217D1600F84A00 /* Template */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Template; sourceTree = "<group>"; };
 		78CD338A0D1D6B5800257654 /* HelpBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpBook.h; sourceTree = "<group>"; };
 		78CD338B0D1D6B5800257654 /* HelpBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpBook.m; sourceTree = "<group>"; };
 		78CD33A80D1D6DCB00257654 /* HelpPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpPage.h; sourceTree = "<group>"; };
 		78CD33A90D1D6DCB00257654 /* HelpPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpPage.m; sourceTree = "<group>"; };
 		78CD34580D1D792900257654 /* PageTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PageTemplate.h; sourceTree = "<group>"; };
 		78CD34590D1D792900257654 /* PageTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PageTemplate.m; sourceTree = "<group>"; };
-		8DD76FA10486AA7600D96B5E /* HelpGenerator */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = HelpGenerator; sourceTree = BUILT_PRODUCTS_DIR; };
-		C6859EA3029092ED04C91782 /* HelpGenerator.1 */ = {isa = PBXFileReference; lastKnownFileType = text.man; path = HelpGenerator.1; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		8DD76F9B0486AA7600D96B5E /* Frameworks */ = {
+		78556EA30D21789C00F84A00 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD76F9C0486AA7600D96B5E /* Foundation.framework in Frameworks */,
+				78556FE20D2178D800F84A00 /* AppKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				08FB7795FE84155DC02AAC07 /* Source */,
-				C6859EA2029092E104C91782 /* Documentation */,
+				78556FE30D21793500F84A00 /* Resources */,
 				08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */,
 				1AB674ADFE9D54B511CA2CBB /* Products */,
 			);
@@ -76,6 +70,8 @@
 				78CD33A90D1D6DCB00257654 /* HelpPage.m */,
 				78CD34580D1D792900257654 /* PageTemplate.h */,
 				78CD34590D1D792900257654 /* PageTemplate.m */,
+				785570090D217AD400F84A00 /* Controller.h */,
+				7855700A0D217AD400F84A00 /* Controller.m */,
 			);
 			name = Source;
 			sourceTree = "<group>";
@@ -83,6 +79,7 @@
 		08FB779DFE84155DC02AAC07 /* External Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				78556EAF0D2178CF00F84A00 /* AppKit.framework */,
 				08FB779EFE84155DC02AAC07 /* Foundation.framework */,
 			);
 			name = "External Frameworks and Libraries";
@@ -91,39 +88,40 @@
 		1AB674ADFE9D54B511CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				8DD76FA10486AA7600D96B5E /* HelpGenerator */,
+				78556EA50D21789C00F84A00 /* Help Generator.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		C6859EA2029092E104C91782 /* Documentation */ = {
+		78556FE30D21793500F84A00 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				C6859EA3029092ED04C91782 /* HelpGenerator.1 */,
+				78556FE50D21795F00F84A00 /* MainMenu.xib */,
+				78556EA70D21789C00F84A00 /* Info.plist */,
+				7855702A0D217D1600F84A00 /* Template */,
 			);
-			name = Documentation;
+			name = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		8DD76F960486AA7600D96B5E /* HelpGenerator */ = {
+		78556EA40D21789C00F84A00 /* Help Generator */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "HelpGenerator" */;
+			buildConfigurationList = 78556EAA0D21789C00F84A00 /* Build configuration list for PBXNativeTarget "Help Generator" */;
 			buildPhases = (
-				8DD76F990486AA7600D96B5E /* Sources */,
-				8DD76F9B0486AA7600D96B5E /* Frameworks */,
-				8DD76F9E0486AA7600D96B5E /* CopyFiles */,
+				78556EA10D21789C00F84A00 /* Resources */,
+				78556EA20D21789C00F84A00 /* Sources */,
+				78556EA30D21789C00F84A00 /* Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = HelpGenerator;
-			productInstallPath = "$(HOME)/bin";
-			productName = HelpGenerator;
-			productReference = 8DD76FA10486AA7600D96B5E /* HelpGenerator */;
-			productType = "com.apple.product-type.tool";
+			name = "Help Generator";
+			productName = "Help Generator";
+			productReference = 78556EA50D21789C00F84A00 /* Help Generator.app */;
+			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
 
@@ -137,54 +135,39 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				8DD76F960486AA7600D96B5E /* HelpGenerator */,
+				78556EA40D21789C00F84A00 /* Help Generator */,
 			);
 		};
 /* End PBXProject section */
 
+/* Begin PBXResourcesBuildPhase section */
+		78556EA10D21789C00F84A00 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				78556FE60D21796400F84A00 /* MainMenu.xib in Resources */,
+				785570710D217D1600F84A00 /* Template in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
-		8DD76F990486AA7600D96B5E /* Sources */ = {
+		78556EA20D21789C00F84A00 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8DD76F9A0486AA7600D96B5E /* HelpGenerator.m in Sources */,
-				78CD338C0D1D6B5800257654 /* HelpBook.m in Sources */,
-				78CD33AA0D1D6DCB00257654 /* HelpPage.m in Sources */,
-				78CD345A0D1D792900257654 /* PageTemplate.m in Sources */,
+				78556FE80D21797200F84A00 /* HelpGenerator.m in Sources */,
+				78556FEA0D21797200F84A00 /* HelpBook.m in Sources */,
+				78556FEC0D21797200F84A00 /* HelpPage.m in Sources */,
+				78556FEE0D21797200F84A00 /* PageTemplate.m in Sources */,
+				7855700B0D217AD400F84A00 /* Controller.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin XCBuildConfiguration section */
-		1DEB927508733DD40010E9CD /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				COPY_PHASE_STRIP = NO;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_MODEL_TUNING = G5;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HelpGenerator_Prefix.pch;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = HelpGenerator;
-				ZERO_LINK = YES;
-			};
-			name = Debug;
-		};
-		1DEB927608733DD40010E9CD /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = HelpGenerator_Prefix.pch;
-				INSTALL_PATH = /usr/local/bin;
-				PRODUCT_NAME = HelpGenerator;
-			};
-			name = Release;
-		};
 		1DEB927908733DD40010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -209,23 +192,72 @@
 			};
 			name = Release;
 		};
+		78556EA80D21789C00F84A00 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = "Help Generator-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Help Generator";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		78556EA90D21789C00F84A00 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INFOPLIST_FILE = Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = "Help Generator";
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1DEB927408733DD40010E9CD /* Build configuration list for PBXNativeTarget "HelpGenerator" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				1DEB927508733DD40010E9CD /* Debug */,
-				1DEB927608733DD40010E9CD /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "HelpGenerator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1DEB927908733DD40010E9CD /* Debug */,
 				1DEB927A08733DD40010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		78556EAA0D21789C00F84A00 /* Build configuration list for PBXNativeTarget "Help Generator" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				78556EA80D21789C00F84A00 /* Debug */,
+				78556EA90D21789C00F84A00 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
