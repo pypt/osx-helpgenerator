@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:transform xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
-	<xsl:output encoding="UTF-8" method="xml" omit-xml-declaration="yes" />
+	<xsl:output encoding="UTF-8" method="xml" />
 	
 	<xsl:template match="/">
 		<div id="introbox">
@@ -23,6 +23,23 @@
 		</div>
 		<xsl:text> </xsl:text>
 	</xsl:template>
+	
+	<xsl:template match="ol/ul">
+		<div class="taskauxlist">
+			<xsl:apply-templates/>
+		</div>
+	</xsl:template>
+	
+	<xsl:template match="ol/ul/li">
+		<div class="taskauxoption">
+		<div class="taskauxbullet">■</div>
+		<div class="taskauxcontent">
+		<p class="taskauxoptionlongtext">
+			<xsl:apply-templates/>
+		</p>
+		</div>
+		</div>
+	</xsl:template>
 
 	<xsl:template match="ul">
 		<div id="introauxlist">
@@ -30,11 +47,29 @@
 		</div>
 	</xsl:template>
 
-	<xsl:template match="li">
+	<xsl:template match="ul/li">
 		<div class="introauxoption">
 		<div class="introauxbullet">■</div>
 		<div class="introauxcontent">
 		<p class="introauxoptionlongtext">
+			<xsl:apply-templates/>
+		</p>
+		</div>
+		</div>
+	</xsl:template>
+	
+	<xsl:template match="ol">
+		<xsl:apply-templates/>
+		<div style="height: 1px"><xsl:text> </xsl:text></div>
+	</xsl:template>
+	
+	<xsl:template match="ol/li">
+		<div class="taskprimtext">
+		<div class="taskprimbullet">
+		<img src="../gfx/step_1.gif" alt="Step 1" class="bullet1"/>
+		</div>
+		<div class="taskprimcontent">
+		<p class="taskprimtextlongtext">
 			<xsl:apply-templates/>
 		</p>
 		</div>
@@ -77,4 +112,10 @@
 		<xsl:text> </xsl:text>
 	</xsl:template>
 	
+	<xsl:template match="u">
+		<u><xsl:apply-templates/></u>
+		<xsl:text> </xsl:text>
+	</xsl:template>
+	
 </xsl:transform>
+

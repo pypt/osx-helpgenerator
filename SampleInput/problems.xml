@@ -11,11 +11,15 @@
 		<p>There are no problems with Sample App.</p>
 		<p>Really. Well, almost.</p>
 		<taskbox title="Kinds of problems">
-			<ul>
+			<ol>
 				<li>Sample App doesn't open</li>
+				<ul>
+					<li>Whatever</li>
+					<li>Wherever</li>
+				</ul>
 				<li>Sample App quits after launch</li>
 				<li>Sample App doesn't work on Windows Vista</li>
-			</ul>
+			</ol>
 		</taskbox>
 	</content>
 </page>
