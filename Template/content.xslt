@@ -66,7 +66,10 @@
 	<xsl:template match="ol/li">
 		<div class="taskprimtext">
 		<div class="taskprimbullet">
-		<img src="../gfx/step_1.gif" alt="Step 1" class="bullet1"/>
+		<img class="bullet1">
+			<xsl:attribute name="src">../gfx/step_<xsl:number format="1"/>.gif</xsl:attribute>
+			<xsl:attribute name="alt">Step <xsl:number format="1"/></xsl:attribute>
+		</img>
 		</div>
 		<div class="taskprimcontent">
 		<p class="taskprimtextlongtext">
