@@ -9,13 +9,13 @@
 	</xsl:template>
 	
 	<xsl:template match="link">
-		<a href="help:anchor='{@href}' bookID=$$APPLETITLE$$">
+		<a href="help:anchor='{@tag}' bookID='<!#APPLETITLE#!>'">
 			<xsl:apply-templates/>
 		</a>
 		<xsl:text> </xsl:text>
 	</xsl:template>
 	
-	<xsl:template match="para">
+	<xsl:template match="p">
 		<div class="introprimtext">
 			<p class="introprimtextlongtext">
 				<xsl:apply-templates/>

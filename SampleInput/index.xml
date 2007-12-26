@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <index>
-	<item tag="problems">problems</item>
-	<item tag="test">test</item>
+	<!--
+		A list of index entries.
+		
+		Each entry has a tag= attribute that specifies the tag that the
+		entry refers to, and a title under which the entry appears.
+	-->
+	<entry tag="problems">problems</entry>
+	<entry tag="test">test</entry>
 </index>

@@ -13,6 +13,6 @@
 
 }
 
-- (void)processInputDirectory:(NSString *)input;
+- (BOOL)processInputDirectory:(NSString *)input;
 
 @end

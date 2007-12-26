@@ -20,13 +20,16 @@
 	NSURL *url;
 	NSString *icon;
 	NSString *smallIcon;
+	NSString *localization;
 	
 	NSMutableDictionary *index;	
 	NSMutableDictionary *pagesByTag;
 	
 	NSMutableDictionary *accessLinks;
 	NSMutableArray *accessFeatures;
-			
+	
+	NSDictionary *strings;
+	
 }
 
 @property (assign) NSString *appleTitle;
@@ -40,5 +43,7 @@
 - (NSString *)accessPageContent;
 
 - (void)outputToDirectory:(NSString *)dir;
+
+- (NSString *)localize:(NSString *)key;
 
 @end

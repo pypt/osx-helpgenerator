@@ -10,6 +10,8 @@
 	<string>Sample App Help</string>
 	<key>HelpIcon</key>
 	<string>AppIcon16.png</string>
+	<key>Language</key>
+	<string>en</string>
 	<key>Website</key>
 	<string>http://sampleapp.com/</string>
 </dict>

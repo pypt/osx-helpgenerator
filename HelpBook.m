@@ -41,6 +41,12 @@
 	icon = [infoDictionary objectForKey:@"AppIcon"];
 	smallIcon = [infoDictionary objectForKey:@"HelpIcon"];
 	
+	localization = [infoDictionary objectForKey:@"Language"];
+	if (!localization)
+		localization = @"en";
+	NSString *stringsPath = [[NSBundle mainBundle] pathForResource:@"Localizable" ofType:@"strings" inDirectory:@"" forLocalization:localization];
+	strings = [[NSDictionary alloc] initWithContentsOfFile:stringsPath];
+		
 	pagesByTag = [[NSMutableDictionary alloc] init];
 	
 	for (NSString *item in [[NSFileManager defaultManager] directoryContentsAtPath:path]) {
@@ -55,9 +61,9 @@
 		
 		if ([[[document rootElement] name] isEqualToString:@"index"]) {
 			index = [[NSMutableDictionary alloc] init];
-			for (NSXMLNode *node in [document nodesForXPath:@"/index/item" error:nil]) {
+			for (id node in [document nodesForXPath:@"/index/entry" error:nil]) {
 				NSString *xname = [node stringValue];
-				NSString *tag = [[(NSXMLElement *)node attributeForName:@"tag"] stringValue];
+				NSString *tag = [[node attributeForName:@"tag"] stringValue];
 				[index setObject:tag forKey:xname];
 			}
 		}
@@ -105,7 +111,7 @@
 	
 	PageTemplate *indexTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"access.html"]]] autorelease];
 	NSDictionary *keys = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSString stringWithFormat:NSLocalizedString(@"AppName Help", @""), name], @"title", 
+						  [NSString stringWithFormat:[self localize:@"AppName Help"], name], @"title", 
 						  left, @"left", 
 						  featured, @"featured", 
 						  appleTitle, @"appleTitle", 
@@ -113,8 +119,8 @@
 						  [url host], @"linkdesc", 
 						  icon ? icon : @"", @"icon", 
 						  smallIcon ? smallIcon : @"", @"helpicon",
-						  NSLocalizedString(@"Index", @""), @"index",
-						  NSLocalizedString(@"Featured Topics", @""), @"FeaturedTopics",
+						  [self localize:@"Index"], @"index",
+						  [self localize:@"Featured Topics"], @"FeaturedTopics",
 						  name, @"appname",
 						  nil];
 	
@@ -128,7 +134,7 @@
 		BOOL active = [page isEqualToString:letter];
 		NSString *desc = [letter capitalizedString];
 		if ([letter isEqualToString:@"all"])
-			desc = NSLocalizedString(@"All", @"");
+			desc = [self localize:@"All"];
 		if (active)
 			[result appendFormat:@"<td width=\"19\"><div class=\"alphacircle\">%@</div></td>\n", desc];
 		else
@@ -155,8 +161,8 @@
 	// write the customized list template
 	PageTemplate *listTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"genlist.html"]]] autorelease];
 	[[listTemplate stringByInsertingValues:[NSDictionary dictionaryWithObjectsAndKeys:
-											NSLocalizedString(@"Home", @""), @"home",
-											NSLocalizedString(@"Index", @""), @"index",
+											[self localize:@"Home"], @"home",
+											[self localize:@"Index"], @"index",
 											appleTitle, @"APPLETITLE", nil]] writeToFile:[dir stringByAppendingPathComponent:@"sty/genlist.html"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 	
 	// write the access page
@@ -185,15 +191,23 @@
 							  content, @"content",
 							  [self indexHeadForPage:letter], @"HEADLIST",
 							  letter, @"letter",
-							  NSLocalizedString(@"Index", @""), @"index",
-							  NSLocalizedString(@"Home", @""), @"home",
+							  [self localize:@"Index"], @"index",
+							  [self localize:@"Home"], @"home",
 							  nil];
 		NSString *xall = [xTemplate stringByInsertingValues:keys];
 		
 		[xall writeToFile:[[dir stringByAppendingPathComponent:@"xpgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"x%@.html", letter]] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 	}
 	
-	system([[NSString stringWithFormat:@"\"/Developer/Applications/Utilities/Help Indexer.app/Contents/MacOS/Help Indexer\" \"%@\"", dir] UTF8String]);
+	system([[NSString stringWithFormat:@"\"/Developer/Applications/Utilities/Help Indexer.app/Contents/MacOS/Help Indexer\" \"%@\" -PantherIndexing YES -Tokenizer 1 -ShowProgress NO -UseRemoteRoot NO -LogStyle 1 -IndexAnchors YES -TigerIndexing YES -GenerateSummaries YES -StopWords en -MinTermLength 3", dir] UTF8String]);
+}
+
+- (NSString *)localize:(NSString *)key
+{
+	NSString *value = [strings objectForKey:key];
+	if (value)
+		return value;
+	return key;
 }
 
 @end

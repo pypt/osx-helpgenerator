@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page>
+	<!--
+		See discover.xml for comments
+	-->
+	
 	<tag>playlists</tag>
 	<tag>test</tag>
 	
 	<title>How Sample App handles playlists</title>
 	<content>
-		<para>It does that in a very intelligent way.</para>
+		<p>It does that in a very intelligent way.</p>
 	</content>
 </page>

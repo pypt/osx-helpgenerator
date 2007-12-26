@@ -13,9 +13,7 @@
 
 - (BOOL)application:(NSApplication *)theApplication openFile:(NSString *)filename
 {
-	[self processInputDirectory:filename];
-	
-	return YES;
+	return [self processInputDirectory:filename];
 }
 
 - (BOOL)applicationOpenUntitledFile:(NSApplication *)theApplication
@@ -31,16 +29,13 @@
 		return NO;
 	}
 	
-	NSString *input = [panel filename];
-	[self processInputDirectory:input];
-	
-	return YES;
+	return [self processInputDirectory:[panel filename]];
 }
 
-- (void)processInputDirectory:(NSString *)input
+- (BOOL)processInputDirectory:(NSString *)input
 {
 	if (!input)
-		return;
+		return NO;
 	
 	NSOpenPanel *panel2 = [NSOpenPanel openPanel];
 	[panel2 setCanChooseFiles:NO];
@@ -50,19 +45,20 @@
 	
 	if ([panel2 runModal] != NSFileHandlingPanelOKButton) {
 		[NSApp terminate:nil];
-		return;
+		return NO;
 	}
 	
 	NSString *output = [panel2 filename];
 	if (!output)
-		return;
+		return NO;
 	
 	NSString *template = [[NSBundle mainBundle] pathForResource:@"Template" ofType:@""];
 	
 	HelpBook *book = [HelpBook bookWithInputBase:input templateBase:template];
 	[book outputToDirectory:output];
 	
-	[NSApp terminate:nil];	
+	[NSApp terminate:nil];
+	return YES;
 }
 
 @end

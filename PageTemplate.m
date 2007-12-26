@@ -16,7 +16,7 @@
 	if (![super init])
 		return nil;
 	
-	source = [NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil];
+	source = [[NSString stringWithContentsOfURL:url encoding:NSUTF8StringEncoding error:nil] retain];
 	
 	return self;
 }
@@ -24,9 +24,8 @@
 - (NSString *)stringByInsertingValues:(NSDictionary *)dictionary
 {
 	NSString *string = source;
-	for (NSString *key in dictionary) {
-		string = [string stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"$$%@$$", [key uppercaseString]] withString:[dictionary objectForKey:key]];
-	}
+	for (NSString *key in dictionary)
+		string = [string stringByReplacingOccurrencesOfString:[NSString stringWithFormat:@"<!#%@#!>", [key uppercaseString]] withString:[dictionary objectForKey:key]];
 	return string;
 }
 
