@@ -52,10 +52,10 @@
 	NSMutableString *relatedString = [NSMutableString string];
 	NSArray *relatedLinks = [related children];
 	if ([relatedLinks count]) {
-		[relatedString appendString:@"<div id=\"linkinternalbox\"><h3>Related Topics</h3>"];
+		[relatedString appendFormat:@"<div id=\"linkinternalbox\"><h3>%@</h3>", NSLocalizedString(@"Related Topics", @"")];
 		for (NSXMLNode *item in relatedLinks) {
 			NSString *link = [[(NSXMLElement *)item attributeForName:@"tag"] stringValue];
-			[relatedString appendFormat:@"<p class=\"linkinternal\"><a href=\"help:anchor='%@' bookID=%@\">%@ <span class=\"linkarrow\"></span></a></p>", link, helpBook.appleTitle, [[helpBook.pagesByTag objectForKey:link] valueForKey:@"title"]];
+			[relatedString appendFormat:@"<p class=\"linkinternal\"><a href=\"help:anchor='%@' bookID='%@'\">%@ <span class=\"linkarrow\"></span></a></p>", link, helpBook.appleTitle, [[helpBook.pagesByTag objectForKey:link] valueForKey:@"title"]];
 		}
 		[relatedString appendString:@"</div>"];		
 	}
@@ -67,6 +67,9 @@
 						  helpBook.appleTitle, @"APPLETITLE",
 						  [helpBook valueForKey:@"icon"], @"icon",
 						  relatedString, @"related",
+						  helpBook.name, @"appname",
+						  NSLocalizedString(@"Home", @""), @"home",
+						  NSLocalizedString(@"Index", @""), @"index",
 						  nil];
 	
 	NSString *output = [template stringByInsertingValues:keys];

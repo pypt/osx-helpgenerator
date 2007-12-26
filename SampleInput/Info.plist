@@ -8,6 +8,8 @@
 	<string>Sample App</string>
 	<key>AppleTitle</key>
 	<string>Sample App Help</string>
+	<key>HelpIcon</key>
+	<string>AppIcon16.png</string>
 	<key>Website</key>
 	<string>http://sampleapp.com/</string>
 </dict>

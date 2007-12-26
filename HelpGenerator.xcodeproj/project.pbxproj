@@ -15,12 +15,14 @@
 		78556FEE0D21797200F84A00 /* PageTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78CD34590D1D792900257654 /* PageTemplate.m */; };
 		7855700B0D217AD400F84A00 /* Controller.m in Sources */ = {isa = PBXBuildFile; fileRef = 7855700A0D217AD400F84A00 /* Controller.m */; };
 		785570710D217D1600F84A00 /* Template in Resources */ = {isa = PBXBuildFile; fileRef = 7855702A0D217D1600F84A00 /* Template */; };
+		78B2131E0D226180003BA219 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 78B2131D0D226180003BA219 /* Localizable.strings */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		08FB7796FE84155DC02AAC07 /* HelpGenerator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpGenerator.m; sourceTree = "<group>"; };
 		08FB779EFE84155DC02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		32A70AAB03705E1F00C91783 /* HelpGenerator_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpGenerator_Prefix.pch; sourceTree = "<group>"; };
+		7840609F0D226ACB00B7D079 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78556EA50D21789C00F84A00 /* Help Generator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Help Generator.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		78556EA70D21789C00F84A00 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		78556EAF0D2178CF00F84A00 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
@@ -28,6 +30,7 @@
 		785570090D217AD400F84A00 /* Controller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Controller.h; sourceTree = "<group>"; };
 		7855700A0D217AD400F84A00 /* Controller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Controller.m; sourceTree = "<group>"; };
 		7855702A0D217D1600F84A00 /* Template */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Template; sourceTree = "<group>"; };
+		78B2131F0D226185003BA219 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		78CD338A0D1D6B5800257654 /* HelpBook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpBook.h; sourceTree = "<group>"; };
 		78CD338B0D1D6B5800257654 /* HelpBook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HelpBook.m; sourceTree = "<group>"; };
 		78CD33A80D1D6DCB00257654 /* HelpPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HelpPage.h; sourceTree = "<group>"; };
@@ -99,6 +102,7 @@
 				78556FE50D21795F00F84A00 /* MainMenu.xib */,
 				78556EA70D21789C00F84A00 /* Info.plist */,
 				7855702A0D217D1600F84A00 /* Template */,
+				78B2131D0D226180003BA219 /* Localizable.strings */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -131,6 +135,14 @@
 			buildConfigurationList = 1DEB927808733DD40010E9CD /* Build configuration list for PBXProject "HelpGenerator" */;
 			compatibilityVersion = "Xcode 3.0";
 			hasScannedForEncodings = 1;
+			knownRegions = (
+				English,
+				Japanese,
+				French,
+				German,
+				en,
+				de,
+			);
 			mainGroup = 08FB7794FE84155DC02AAC07 /* HelpGenerator */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -147,6 +159,7 @@
 			files = (
 				78556FE60D21796400F84A00 /* MainMenu.xib in Resources */,
 				785570710D217D1600F84A00 /* Template in Resources */,
+				78B2131E0D226180003BA219 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -166,6 +179,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		78B2131D0D226180003BA219 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				78B2131F0D226185003BA219 /* en */,
+				7840609F0D226ACB00B7D079 /* de */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		1DEB927908733DD40010E9CD /* Debug */ = {

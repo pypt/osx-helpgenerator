@@ -2,12 +2,11 @@
 <page>
 	<tag>problems</tag>
 	<tag>test</tag>
-	
 	<title>Solving Problems</title>
+	
 	<content>
 		<para>There are no problems with Sample App.</para>
 		<para>Really. Well, almost.</para>
-		
 		<taskbox title="Kinds of problems">
 			<ul>
 				<li>Sample App doesn't open</li>

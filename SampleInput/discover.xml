@@ -2,6 +2,10 @@
 <page>
 	<tag>discover</tag>
 	<title>Discover Sample App</title>
+	<related>
+		<item tag="problems" />
+	</related>
+	
 	<content>
 		<para><b>Sample App</b> is a <link href="problems">great</link> application!</para>
 		<ul>
@@ -9,7 +13,4 @@
 			<li>bar</li>
 		</ul>
 	</content>
-	<related>
-		<item tag="problems" />
-	</related>
 </page>

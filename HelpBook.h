@@ -19,6 +19,7 @@
 	NSString *appleTitle;
 	NSURL *url;
 	NSString *icon;
+	NSString *smallIcon;
 	
 	NSMutableDictionary *index;	
 	NSMutableDictionary *pagesByTag;
@@ -29,6 +30,7 @@
 }
 
 @property (assign) NSString *appleTitle;
+@property (assign) NSString *name;
 @property (readonly) NSDictionary *pagesByTag;
 
 + (HelpBook *)bookWithInputBase:(NSString *)input templateBase:(NSString *)template;

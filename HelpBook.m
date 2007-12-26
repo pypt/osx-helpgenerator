@@ -16,7 +16,7 @@
 
 @implementation HelpBook
 
-@synthesize appleTitle, pagesByTag;
+@synthesize appleTitle, pagesByTag, name;
 
 + (HelpBook *)bookWithInputBase:(NSString *)input templateBase:(NSString *)template
 {
@@ -39,6 +39,7 @@
 	if ([infoDictionary objectForKey:@"Website"])
 		url = [NSURL URLWithString:[infoDictionary objectForKey:@"Website"]];
 	icon = [infoDictionary objectForKey:@"AppIcon"];
+	smallIcon = [infoDictionary objectForKey:@"HelpIcon"];
 	
 	pagesByTag = [[NSMutableDictionary alloc] init];
 	
@@ -93,24 +94,28 @@
 	for (NSString *href in accessLinks) {
 		NSString *desc = [accessLinks objectForKey:href];
 		NSString *title = [[pagesByTag objectForKey:href] valueForKey:@"title"];
-		[left appendFormat:@"<p class=\"topleft_p\"><a href=\"help:anchor='%@' bookID=%@\">%@</a><br/>%@</p>\n\n", href, appleTitle, title, desc];
+		[left appendFormat:@"<p class=\"topleft_p\"><a href=\"help:anchor='%@' bookID='%@'\">%@</a><br/>%@</p>\n\n", href, appleTitle, title, desc];
 	}
 	
 	NSMutableString *featured = [NSMutableString string];
 	for (NSString *href in accessFeatures) {
 		NSString *title = [[pagesByTag objectForKey:href] valueForKey:@"title"];
-		[featured appendFormat:@"<p><a href=\"help:anchor='%@' bookID=%@\">%@</a></p>\n\n", href, appleTitle, title];
+		[featured appendFormat:@"<p><a href=\"help:anchor='%@' bookID='%@'\">%@</a></p>\n\n", href, appleTitle, title];
 	}
 	
 	PageTemplate *indexTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"access.html"]]] autorelease];
 	NSDictionary *keys = [NSDictionary dictionaryWithObjectsAndKeys:
-						  [NSString stringWithFormat:@"%@ Help", name], @"title", 
+						  [NSString stringWithFormat:NSLocalizedString(@"AppName Help", @""), name], @"title", 
 						  left, @"left", 
 						  featured, @"featured", 
 						  appleTitle, @"appleTitle", 
 						  [url absoluteString], @"link", 
 						  [url host], @"linkdesc", 
-						  icon, @"icon", 
+						  icon ? icon : @"", @"icon", 
+						  smallIcon ? smallIcon : @"", @"helpicon",
+						  NSLocalizedString(@"Index", @""), @"index",
+						  NSLocalizedString(@"Featured Topics", @""), @"FeaturedTopics",
+						  name, @"appname",
 						  nil];
 	
 	return [indexTemplate stringByInsertingValues:keys];
@@ -121,10 +126,13 @@
 	NSMutableString *result = [NSMutableString string];
 	for (NSString *letter in INDEX_LETTERS) {
 		BOOL active = [page isEqualToString:letter];
+		NSString *desc = [letter capitalizedString];
+		if ([letter isEqualToString:@"all"])
+			desc = NSLocalizedString(@"All", @"");
 		if (active)
-			[result appendFormat:@"<td width=\"19\"><div class=\"alphacircle\">%@</div></td>\n", [letter capitalizedString]];
+			[result appendFormat:@"<td width=\"19\"><div class=\"alphacircle\">%@</div></td>\n", desc];
 		else
-			[result appendFormat:@"<td width=\"19\"><a href=\"help:anchor='x%@' bookID=%@\">%@</a></td>\n", letter, appleTitle, [letter capitalizedString]];
+			[result appendFormat:@"<td width=\"19\"><a href=\"help:anchor='x%@' bookID='%@'\">%@</a></td>\n", letter, appleTitle, desc];
 	}
 	return result;
 }
@@ -133,39 +141,43 @@
 {
 	dir = [dir stringByAppendingPathComponent:appleTitle];
 	
+	// create a copy of the Skeleton directory
 	NSFileManager *fm = [NSFileManager defaultManager];
 	[fm removeItemAtPath:dir error:nil];	
 	[fm copyPath:skeletonBase toPath:dir handler:nil];
 	
+	// copy additional images to the gfx directory
 	for (NSString *path in [fm directoryContentsAtPath:[inputBase stringByAppendingPathComponent:@"gfx"]]){
 		NSString *from = [[inputBase stringByAppendingPathComponent:@"gfx"] stringByAppendingPathComponent:path];
 		[fm copyPath:from toPath:[[dir stringByAppendingPathComponent:@"gfx"] stringByAppendingPathComponent:path] handler:nil];
 	}
 	
-	[[self accessPageContent] writeToFile:[dir stringByAppendingPathComponent:@"index.html"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+	// write the customized list template
+	PageTemplate *listTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"genlist.html"]]] autorelease];
+	[[listTemplate stringByInsertingValues:[NSDictionary dictionaryWithObjectsAndKeys:
+											NSLocalizedString(@"Home", @""), @"home",
+											NSLocalizedString(@"Index", @""), @"index",
+											appleTitle, @"APPLETITLE", nil]] writeToFile:[dir stringByAppendingPathComponent:@"sty/genlist.html"] atomically:NO encoding:NSUTF8StringEncoding error:nil];
+	
+	// write the access page
+	[[self accessPageContent] writeToFile:[dir stringByAppendingPathComponent:[NSString stringWithFormat:@"%@.html", appleTitle]] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 		
-	NSMutableSet *pagesWritten = [NSMutableSet set];
-	NSInteger count = 0;
-	NSDictionary *pages = [self pagesByTag];
+	// write content pages
+	NSInteger count = 1;
 	PageTemplate *simpleTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"page.html"]]] autorelease];
 	PageTemplate *xsltTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"content.xslt"]]] autorelease];
 	NSString *xslt = [xsltTemplate stringByInsertingValues:[NSDictionary dictionaryWithObjectsAndKeys:appleTitle, @"appleTitle", nil]];	
-	for (NSString *tag in pages) {
-		HelpPage *page = [pages objectForKey:tag];
-		if ([pagesWritten containsObject:page])
-			continue;
-		
+	for (HelpPage *page in [NSSet setWithArray:[pagesByTag allValues]])
 		[page writeToFile:[[dir stringByAppendingPathComponent:@"pgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.html", count++]] usingTemplate:simpleTemplate contentXSLT:xslt];
-		[pagesWritten addObject:page];
-	}
 	
+	// write index pages
 	PageTemplate *xTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"index.html"]]] autorelease];
 	for (NSString *letter in INDEX_LETTERS) {
 		NSMutableString *content = [NSMutableString string];
 		for (NSString *x in index) {
 			if (![[x lowercaseString] hasPrefix:letter] && ![letter isEqualToString:@"all"])
 				continue;
-			[content appendFormat:@"<tr><td><a href=\"help:topic_list=%@ bookID='%@' template=sty/genlist.html stylesheet=sty/genlist_style.css Other=%@\">%@</a></td><td></td></tr>\n\n", [index objectForKey:x], appleTitle, x, x, nil];
+			[content appendFormat:@"<tr><td><a href=\"help:topic_list=%@ bookID='%@' template=sty/genlist.html stylesheet=sty/genlist_style.css Other='%@'\">%@</a></td><td></td></tr>\n\n", [index objectForKey:x], appleTitle, x, x, nil];
 		}
 		
 		NSDictionary *keys = [NSDictionary dictionaryWithObjectsAndKeys:
@@ -173,6 +185,8 @@
 							  content, @"content",
 							  [self indexHeadForPage:letter], @"HEADLIST",
 							  letter, @"letter",
+							  NSLocalizedString(@"Index", @""), @"index",
+							  NSLocalizedString(@"Home", @""), @"home",
 							  nil];
 		NSString *xall = [xTemplate stringByInsertingValues:keys];
 		
