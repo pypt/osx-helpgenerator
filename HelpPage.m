@@ -38,7 +38,7 @@
 {
 	NSMutableString *tagString = [NSMutableString string];
 	for (NSString *tag in tags)
-		[tagString appendFormat:@"<a name=\"%@\"></a>\n", tag];
+		[tagString appendFormat:@"<a name=\"%@\"> </a>\n", tag];
 	
 	NSXMLDocument *contDoc = [NSXMLDocument documentWithRootElement:(NSXMLElement *)[[content copy] autorelease]];
 	id cont = [contDoc objectByApplyingXSLTString:xslt arguments:nil error:nil];
@@ -55,7 +55,8 @@
 		[relatedString appendFormat:@"<div id=\"linkinternalbox\"><h3>%@</h3>", [helpBook localize:@"Related Topics"]];
 		for (NSXMLNode *item in relatedLinks) {
 			NSString *link = [[(NSXMLElement *)item attributeForName:@"tag"] stringValue];
-			[relatedString appendFormat:@"<p class=\"linkinternal\"><a href=\"help:anchor='%@' bookID='%@'\">%@ <span class=\"linkarrow\"></span></a></p>", link, helpBook.appleTitle, [[helpBook.pagesByTag objectForKey:link] valueForKey:@"title"]];
+			NSString *ltitle = [[[helpBook.pagesByTag objectForKey:link] anyObject] valueForKey:@"title"];
+			[relatedString appendFormat:@"<p class=\"linkinternal\"><a href=\"%@\">%@ <span class=\"linkarrow\"></span></a></p>", [helpBook linkToTag:link listTitle:ltitle], ltitle];
 		}
 		[relatedString appendString:@"</div>"];		
 	}
