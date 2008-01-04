@@ -22,10 +22,11 @@
 	NSString *smallIcon;
 	NSString *localization;
 	
-	NSMutableDictionary *index;	
+	NSMutableSet *pages;
 	NSMutableDictionary *pagesByTag;
 	
-	NSMutableDictionary *accessLinks;
+	NSMutableArray *index;
+	NSMutableArray *accessLinks;
 	NSMutableArray *accessFeatures;
 	
 	NSDictionary *strings;
@@ -41,6 +42,8 @@
 - (id)initWithBasePath:(NSString *)path templateBase:(NSString *)template;
 
 - (NSString *)accessPageContent;
+
+- (NSString *)linkToTag:(NSString *)tag listTitle:(NSString *)title;
 
 - (void)outputToDirectory:(NSString *)dir;
 
