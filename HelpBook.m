@@ -14,6 +14,12 @@
 
 #define INDEX_LETTERS [NSArray arrayWithObjects:@"a", @"b", @"c", @"d", @"e", @"f", @"g", @"h", @"i", @"j", @"k", @"l", @"m", @"n", @"o", @"p", @"q", @"r", @"s", @"t", @"u", @"v", @"w", @"x", @"y", @"z", @"all", nil]
 
+int sortIndex(id o1, id o2, void* context) {
+	NSString *t1 = [o1 objectAtIndex:1];
+	NSString *t2 = [o2 objectAtIndex:1];
+	return [t1 caseInsensitiveCompare:t2];
+}
+
 @implementation HelpBook
 
 @synthesize appleTitle, pagesByTag, name;
@@ -67,6 +73,7 @@
 				NSString *tag = [[node attributeForName:@"tag"] stringValue];
 				[index addObject:[NSArray arrayWithObjects:tag, xname, nil]];
 			}
+			[index sortUsingFunction:sortIndex context:nil];
 		}
 		else if ([[[document rootElement] name] isEqualToString:@"access"]) {
 			accessLinks = [[NSMutableArray alloc] init];
