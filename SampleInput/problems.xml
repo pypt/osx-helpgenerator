@@ -21,5 +21,16 @@
 				<li>Sample App doesn't work on Windows Vista</li>
 			</ol>
 		</taskbox>
+		
+		<preftable>
+			<tr>
+				<preference>Foo bar</preference>
+				<explanation>Muh gnaa</explanation>
+			</tr>
+			<tr>
+				<preference>Foo bar</preference>
+				<explanation>Muh gnaa</explanation>
+			</tr>
+		</preftable>
 	</content>
 </page>

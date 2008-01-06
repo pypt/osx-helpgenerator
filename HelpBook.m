@@ -194,7 +194,7 @@ int sortIndex(id o1, id o2, void* context) {
 	NSInteger count = 1;
 	PageTemplate *simpleTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"page.html"]]] autorelease];
 	PageTemplate *xsltTemplate = [[[PageTemplate alloc] initWithURL:[NSURL fileURLWithPath:[templateBase stringByAppendingPathComponent:@"content.xslt"]]] autorelease];
-	NSString *xslt = [xsltTemplate stringByInsertingValues:[NSDictionary dictionaryWithObjectsAndKeys:appleTitle, @"appleTitle", nil]];	
+	NSString *xslt = [xsltTemplate stringByInsertingValues:[NSDictionary dictionaryWithObjectsAndKeys:appleTitle, @"appleTitle", 						  [self localize:@"Preference"], @"preference", [self localize:@"Explanation"], @"explanation", nil]];	
 	for (HelpPage *page in pages)
 		[page writeToFile:[[dir stringByAppendingPathComponent:@"pgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.html", count++]] usingTemplate:simpleTemplate contentXSLT:xslt];
 	

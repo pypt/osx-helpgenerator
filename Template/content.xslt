@@ -124,5 +124,46 @@
 		<xsl:text> </xsl:text>
 	</xsl:template>
 	
+	<xsl:template match="preftable">
+		<div id="table">
+			<div class="table">
+				<table width="100%" border="0" cellspacing="0" cellpadding="0" summary="Two column table">
+					<tr>
+						<td align="left" valign="top" bgcolor="white" width="10" height="6"><img src="../gfx/tableend_left_5px.gif" alt="" height="5" width="10" border="0"/></td>
+						<td colspan="2" align="left" valign="top" bgcolor="white" height="6"><img src="../gfx/table_mid_5.gif" alt="" height="5" width="100%" border="0"/></td>
+						<td align="left" valign="top" bgcolor="white" width="2" height="6"><img src="../gfx/tableend_right_5px.gif" alt="" height="5" width="10" border="0"/></td>
+					</tr>
+					<tr>
+						<th class="row-rule" align="left" valign="top" bgcolor="white" width="10"></th>
+						<th class="row-rule" align="left" valign="top" bgcolor="white" width="50%">
+						<p class="tableheadlowerprefix"><!#PREFERENCE#!></p>
+					</th>
+					<th class="row-rule" align="left" valign="top" bgcolor="white">
+						<p class="tableheadlowerprefix"><!#EXPLANATION#!></p>
+					</th>
+						<th class="row-rule" align="left" valign="top" bgcolor="white" width="10"></th>
+					</tr>
+					<xsl:apply-templates/>
+				</table>
+				<br/>
+			</div>
+		</div>
+		<xsl:text> </xsl:text>
+	</xsl:template>
+	
+	<xsl:template match="preftable/tr">
+		<tr>
+			<td class="row-rule" align="left" valign="top" bgcolor="white" width="10"></td>
+			<td class="row-rule" align="left" valign="top" bgcolor="white" width="50%">
+				<p class="tableprimtext"><xsl:apply-templates select="preference"/></p>
+			</td>
+			<td class="row-rule" align="left" valign="top" bgcolor="white">
+				<p class="tableprimtext"><xsl:apply-templates select="explanation"/></p>
+			</td>
+			<td class="row-rule" align="left" valign="top" bgcolor="white" width="10"></td>
+		</tr>
+		<xsl:text> </xsl:text>	
+	</xsl:template>
+	
 </xsl:transform>
 
