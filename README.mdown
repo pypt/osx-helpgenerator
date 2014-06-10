@@ -1,0 +1,7 @@
+Help Generator creates help books for use in Cocoa apps that follow the style of Apple's help books that are included with Safari, Mail, etc. Help Generator works by reading an XML help definition file.
+
+Generated help books contain an access page, a number of topic pages and automatically generated index for tags you specify.
+
+Recommended reading: [http://andymatuschak.org/articles/2005/12/18/help-with-apple-help](https://web.archive.org/web/20100912034434/http://andymatuschak.org/articles/2005/12/18/help-with-apple-help) (note that this Tiger-style, but Help Generator comes with a Leopard-style template)
+
+Currently this is not much more than a quick hack, but stay tuned.
