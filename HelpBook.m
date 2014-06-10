@@ -225,8 +225,29 @@ int sortIndex(id o1, id o2, void* context) {
 		
 		[xall writeToFile:[[dir stringByAppendingPathComponent:@"xpgs"] stringByAppendingPathComponent:[NSString stringWithFormat:@"x%@.html", letter]] atomically:NO encoding:NSUTF8StringEncoding error:nil];
 	}
+    
+    NSString *pathToAuxiliaryTools = @"/Applications/Auxiliary Tools for Xcode";
+    NSString *pathToHelpIndexerApp = [pathToAuxiliaryTools stringByAppendingPathComponent:@"Help Indexer.app"];
+    NSString *pathToHelpIndexerExecutable = [pathToHelpIndexerApp stringByAppendingPathComponent:@"Contents/MacOS/Help Indexerr"];
+    
+    if (! [[NSFileManager defaultManager] fileExistsAtPath:pathToHelpIndexerExecutable isDirectory:NO]) {
+        NSString *helpIndexerError = [NSString stringWithFormat:
+                                      @"Help Indexer executable doesn't exist at path:\n"
+                                      "    %@\n"
+                                      "Please install Auxiliary Tools for Xcode:\n"
+                                      "1. Go to https://developer.apple.com/downloads/index.action\n"
+                                      "2. Search for \"Auxiliary Tools for Xcode\"\n"
+                                      "3. Download the latest disk image of Auxiliary Tools (e.g. \"Auxiliary Tools for Xcode - October 2013\")\n"
+                                      "4. Copy the contents of the disk image to directory %@\n"
+                                      "5. Make sure that the Help Indexer executable exists at path listed above",
+                                      pathToHelpIndexerExecutable, pathToAuxiliaryTools];
+        
+        [NSException raise:@"Help Indexer was not found" format:@"%@", helpIndexerError];
+        abort();
+    }
+    
 	
-	system([[NSString stringWithFormat:@"\"/Developer/Applications/Utilities/Help Indexer.app/Contents/MacOS/Help Indexer\" \"%@\" -PantherIndexing YES -Tokenizer 1 -ShowProgress NO -UseRemoteRoot NO -LogStyle 1 -IndexAnchors YES -TigerIndexing YES -GenerateSummaries YES -StopWords en -MinTermLength 3", dir] UTF8String]);
+	system([[NSString stringWithFormat:@"\"%@\" \"%@\" -PantherIndexing YES -Tokenizer 1 -ShowProgress NO -UseRemoteRoot NO -LogStyle 1 -IndexAnchors YES -TigerIndexing YES -GenerateSummaries YES -StopWords en -MinTermLength 3", pathToHelpIndexerExecutable, dir] UTF8String]);
 }
 
 - (NSString *)localize:(NSString *)key
